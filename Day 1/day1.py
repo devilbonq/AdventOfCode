@@ -1,21 +1,22 @@
+import time
+
+
 def readFile(inputFile):
-    try:
-        file = open(inputFile, "r")
-        inputList = file.read().split("\n")
-        file.close()
-        return inputList
-    except Exception:
-        print("Cannot read or access file.")
+    with open(inputFile, "r") as f:
+        lines = f.readlines()
+    return lines
 
 
 def functionA():
+    start = time.clock()
     currentFrequency = 0
     for x in readFile("input.txt"):
         currentFrequency += int(x)
-    print("Current frequency: {}".format(currentFrequency))
+    return currentFrequency, time.clock() - start
 
 
 def functionB():
+    start = time.clock()
     currentFrequency = 0
     pastFrequency = []
     frequencyChanges = readFile("input.txt")
@@ -23,12 +24,13 @@ def functionB():
         for x in frequencyChanges:
             currentFrequency += int(x)
             if currentFrequency in pastFrequency:
-                print("First frequency reached twice: {}".format(currentFrequency))
-                return False
+                return currentFrequency, time.clock() - start
             else:
                 pastFrequency.append(currentFrequency)
 
 
 if __name__ == '__main__':
-    functionA()
-    functionB()
+    resultA, timeA = functionA()
+    print("Current frequency: {}. Completed in {}.".format(resultA, timeA))
+    resultB, timeB = functionB()
+    print("First frequency reached twice: {}. Completed in {}.".format(resultB, timeB))
