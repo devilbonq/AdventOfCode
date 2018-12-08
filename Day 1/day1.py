@@ -15,5 +15,20 @@ def functionA():
     print("Current frequency: {}".format(currentFrequency))
 
 
+def functionB():
+    currentFrequency = 0
+    pastFrequency = []
+    frequencyChanges = readFile("input.txt")
+    while True:
+        for x in frequencyChanges:
+            currentFrequency += int(x)
+            if currentFrequency in pastFrequency:
+                print("First frequency reached twice: {}".format(currentFrequency))
+                return False
+            else:
+                pastFrequency.append(currentFrequency)
+
+
 if __name__ == '__main__':
     functionA()
+    functionB()
